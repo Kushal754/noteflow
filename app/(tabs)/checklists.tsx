@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Text, FAB } from 'react-native-paper';
+import { useRouter } from 'expo-router';
 import NoteCard from '../../components/NoteCard';
 import { useNotesStore } from '../../store/notesStore';
 
 export default function ChecklistsScreen() {
   const theme = useTheme();
+  const router = useRouter();
   const notes = useNotesStore((state) => state.notes);
-  
   
   const checklistNotes = notes.filter(note => note.type === 'checklist');
 
@@ -19,7 +20,6 @@ export default function ChecklistsScreen() {
         contentContainerStyle={styles.list}
         renderItem={({ item }) => <NoteCard note={item} />}
         ListEmptyComponent={
-          // Un pequeño texto si no hay tareas aún
           <View style={styles.empty}>
             <Text style={{ color: theme.colors.onSurfaceVariant }}>
               No tienes listas de tareas activas.
@@ -27,11 +27,16 @@ export default function ChecklistsScreen() {
           </View>
         }
       />
+
+      <FAB
+        icon="plus"
+        style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+        color={theme.colors.onPrimary}
+        onPress={() => router.push('/nueva-tarea')}
+      />
     </View>
   );
 }
-
-import { Text } from 'react-native-paper'; // Añadimos esto para el texto de vacío
 
 const styles = StyleSheet.create({
   container: {
@@ -45,5 +50,11 @@ const styles = StyleSheet.create({
     padding: 32,
     alignItems: 'center',
     opacity: 0.7,
-  }
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
 });

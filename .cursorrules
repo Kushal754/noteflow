@@ -1,0 +1,16 @@
+# Contexto del Proyecto NoteFlow
+Proyecto React Native gestionado con Expo (SDK 56).
+Lenguaje: TypeScript estricto.
+
+# Stack Tecnológico
+- UI: react-native-paper
+- Navegación: expo-router (Tabs)
+- Estado: zustand
+- Persistencia: @react-native-async-storage/async-storage
+- Listas: @shopify/flash-list
+
+# Restricciones Arquitectónicas
+1. PROHIBIDO usar etiquetas HTML (div, span, etc.). Usar <View>, <Text>.
+2. PROHIBIDO usar CSS web. Usar StyleSheet.create.
+3. El estado global debe ser atómico (Zustand), evitar dependencias complejas en useEffect.
+4. Las listas deben usar FlashList definiendo siempre estimatedItemSize.

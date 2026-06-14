@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTheme, Text, FAB } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import { FlashList } from '@shopify/flash-list';
 import NoteCard from '../../components/NoteCard';
 import { useNotesStore } from '../../store/notesStore';
 
@@ -9,13 +10,11 @@ export default function IdeasScreen() {
   const theme = useTheme();
   const router = useRouter();
   const notes = useNotesStore((state) => state.notes);
-  
-
   const ideaNotes = notes.filter(note => note.type === 'idea');
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <FlatList
+      <FlashList
         data={ideaNotes}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
@@ -29,7 +28,6 @@ export default function IdeasScreen() {
         }
       />
 
-      {/* Botón flotante para abrir el formulario de ideas */}
       <FAB
         icon="plus"
         style={[styles.fab, { backgroundColor: theme.colors.primary }]}

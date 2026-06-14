@@ -1,29 +1,34 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
-import { useTheme, FAB } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { useTheme, Text, FAB } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import { FlashList } from '@shopify/flash-list';
 import NoteCard from '../../components/NoteCard';
 import { useNotesStore } from '../../store/notesStore';
 
 export default function NotasScreen() {
   const theme = useTheme();
-  // Enganchamos el enrutador para poder navegar
   const router = useRouter(); 
-  
   const notes = useNotesStore((state) => state.notes);
   const textNotes = notes.filter(note => note.type === 'note');
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <FlatList
+      <FlashList
         data={textNotes}
         keyExtractor={(item) => item.id}
-        // Damos un poco de margen abajo para que la última nota no quede tapada por el botón
+        
         contentContainerStyle={styles.list} 
         renderItem={({ item }) => <NoteCard note={item} />}
+        ListEmptyComponent={
+          <View style={styles.empty}>
+            <Text style={{ color: theme.colors.onSurfaceVariant }}>
+              No tienes notas de texto. ¡Crea la primera!
+            </Text>
+          </View>
+        }
       />
       
-      {/* Nuestro Botón Flotante (Floating Action Button) */}
       <FAB
         icon="plus"
         style={[styles.fab, { backgroundColor: theme.colors.primary }]}
@@ -41,6 +46,11 @@ const styles = StyleSheet.create({
   list: {
     padding: 16,
     paddingBottom: 80, 
+  },
+  empty: {
+    padding: 32,
+    alignItems: 'center',
+    opacity: 0.7,
   },
   fab: {
     position: 'absolute',

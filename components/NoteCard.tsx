@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Card, Text, IconButton, Checkbox } from 'react-native-paper';
 import { AnyNote } from '../types';
 import { useNotesStore } from '../store/notesStore';
+import { useRouter } from 'expo-router';
 
 interface NoteCardProps {
   note: AnyNote;
@@ -10,6 +11,8 @@ interface NoteCardProps {
 
 export default function NoteCard({ note }: NoteCardProps) {
   const deleteNote = useNotesStore((state) => state.deleteNote);
+  const router = useRouter();
+
   const toggleChecklistItem = useNotesStore((state) => state.toggleChecklistItem);
 
  
@@ -21,6 +24,7 @@ export default function NoteCard({ note }: NoteCardProps) {
         styles.card, 
         note.type === 'idea' && note.color ? { backgroundColor: note.color } : null
       ]}
+      onPress={() => router.push(`/nota/${note.id}`)}
     >
       <Card.Content>
         {/* Cabecera de la tarjeta: Título y botón de borrar */}

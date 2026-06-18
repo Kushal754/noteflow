@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, IconButton, useTheme } from 'react-native-paper';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useNotesStore } from '../../store/notesStore';
+import * as Haptics from 'expo-haptics';
 
 export default function NotaDetalleScreen() {
   const theme = useTheme();
@@ -38,6 +39,7 @@ export default function NotaDetalleScreen() {
           text: "Sí, eliminar", 
           style: "destructive", 
           onPress: () => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             deleteNote(note.id);
             router.back();
           } 
